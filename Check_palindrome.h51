@@ -1,0 +1,19 @@
+ORG 000H
+SJMP START
+START   :   MOV R5, #8
+            MOV R0, #30H
+            MOV R1, #3FH
+LOOP    :   CLR C
+            MOV A, @R0
+            SUBB A, @R1
+            JNZ FALSE
+            INC R0
+            DEC R1
+            DJNZ R5, LOOP
+            MOV R0, #40H
+            MOV @R0, #01H
+FINAL   :   SJMP FINAL
+
+FALSE   :   MOV R0, #40H
+            MOV @R0, #0FFH
+STOP    :   SJMP STOP

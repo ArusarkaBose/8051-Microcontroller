@@ -1,0 +1,38 @@
+; Write to RAM 
+ORG 000H
+SJMP START
+START : MOV A, #16
+        MOV R1, #30H
+        MOV R2, #16
+LOOP  : MOV @R1, A
+        INC R1
+        DEC A
+        DJNZ R2, LOOP
+SJMP SORT
+
+;Sorting
+SORT    :   MOV R5, #15 
+            MOV R6, #30H
+OUTER   :   MOV A, R5
+            MOV R4, A
+            MOV A, R6
+            MOV R1, A
+INNER   :   MOV A, R1
+            MOV R0, A
+            INC R0
+            MOV A, @R0
+            SUBB A, @R1
+            JC EXCHANGE
+RESUME  :   INC R1
+            DJNZ R4, INNER
+            DEC R5
+            CJNE R5, #00, OUTER
+STOP    :   SJMP STOP            
+
+
+EXCHANGE:   MOV A, @R0
+            XCH A, @R1
+            MOV @R0, A
+            SJMP RESUME
+
+
